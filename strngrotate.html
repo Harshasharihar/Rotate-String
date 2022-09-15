@@ -17,6 +17,8 @@
         }
         .displaybox{
             display: flex;
+            justify-content: center;
+            align-items: center;
         }
         .btn{
             font-size: 3rem;
@@ -25,11 +27,34 @@
             padding: 2em;
         }
         .display{
+            display: flex;
             width: 70%;
             min-height: 400px;
             font-size: 5rem;
-            background-color: black;
-            color: red;
+            background-color: yellow;
+            color: blue;
+            overflow: hidden;
+
+        }
+        .letter{
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 5rem;
+            padding: 1.2em;
+            height: 100px;
+            margin-left: 5px;
+            margin-right: 5px;
+            background-color: yellow;
+            border: 2px solid black;
+            transition: all 5s;
+        }
+
+        .moveRight{
+            transform: translateX(100px);
+        }
+        .moveLeft{
+            transform: translateX(-100px);
         }
     </style>
 </head>
@@ -60,19 +85,39 @@
 
         submitBtn.onclick=function(){
             userString=inputBox.value
-            displayBox.innerHTML=`<h1>${userString}</h1>`
+          //  displayBox.innerHTML=`<h1>${userString}</h1>`
+            displayBox.innerHTML=update(userString)
+            
+        }
+        
+        function update(s){
+            let letters =Array.from(s)
+            let resHtml=""
+            for(let letter of letters){
+                resHtml+=`<div class="letter">${letter}</div>`
+
+            }
+            return resHtml
         }
 
         function rotate(e){
             let btn=e.target
             if(btn.innerText.trim() == ">"){
                 userString=rotateRightOnce(userString)
+                addClass("moveRight")
             }
             else{
                 userString=rotateLeftOnce(userString)
-
+                addClass("moveLeft")
             }
-            displayBox.innerHTML=`<h1>${userString}</h1>`
+           // displayBox.innerHTML=`<h1>${userString}</h1>`
+        }
+
+        function addClass(className){
+           let letterBoxes= document.querySelectorAll(".letter")
+           for(let letterBox of letterBoxes){
+            letterBox.classList.add(className)
+           }
         }
 
         function rotateRightOnce(s){
